@@ -1,0 +1,26 @@
+# OSX auto-generated files
+.DS_Store
+
+# Ignore potentially sensitive phpunit file
+phpunit.xml
+
+# Ignore composer generated files
+composer.lock
+vendor/
+
+# Cache, session files and logs (Symfony3)
+/var/
+
+!/var/cache
+/var/cache/
+!var/cache/.gitkeep
+
+!/var/logs
+/var/logs/
+!var/logs/.gitkeep
+
+!/var/sessions
+/var/sessions/
+!var/sessions/.gitkeep
+
+!var/SymfonyRequirements.php
