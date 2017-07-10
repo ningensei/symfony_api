@@ -10,7 +10,7 @@ $client = new \GuzzleHttp\Client([
 ]);
 
 $data = [
-	'nombre' => 'Apple',
+	'nombre' => 'EmpresaTest',
 	'cuit'   => '20-34929950-0',
 	'direccion' => 'Castillo 843'
 ];
@@ -22,14 +22,21 @@ $response = $client->post('/api/empresa', [
 	'body' => json_encode($data)
 ]);
 
+$location = getHeader($response, 'Location');
 
 // 2) GET an empresa resource
-$response = $client->get('/api/empresa/'.$id);
+$response = $client->get($location);
 
-echo "\n";
-echo "status_code => ".$response->getStatusCode();
-echo "\n";
-echo "body => ".$response->getBody();
-echo "\n";
-echo "\n";
+getResponse();
 
+
+function getResponse() {
+	echo "\n\n";
+	echo $response->getBody();
+	echo "\n\n";
+}
+
+
+function getHeader($response, $header) {
+	return $response->getHeaders()[$header][0];
+}
