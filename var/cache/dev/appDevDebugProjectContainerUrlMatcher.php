@@ -147,6 +147,28 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             }
             not_app_api_empresa_new:
 
+            // app_api_empresa_update
+            if (preg_match('#^/api/empresa/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                if ('PUT' !== $canonicalMethod) {
+                    $allow[] = 'PUT';
+                    goto not_app_api_empresa_update;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'app_api_empresa_update')), array (  '_controller' => 'AppBundle\\Controller\\Api\\EmpresaController::updateAction',));
+            }
+            not_app_api_empresa_update:
+
+            // app_api_empresa_delete
+            if (preg_match('#^/api/empresa/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                if ('DELETE' !== $canonicalMethod) {
+                    $allow[] = 'DELETE';
+                    goto not_app_api_empresa_delete;
+                }
+
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'app_api_empresa_delete')), array (  '_controller' => 'AppBundle\\Controller\\Api\\EmpresaController::deleteAction',));
+            }
+            not_app_api_empresa_delete:
+
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

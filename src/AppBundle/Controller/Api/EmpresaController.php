@@ -65,11 +65,10 @@ class EmpresaController extends Controller
 	 */
 	public function newAction(Request $request)
 	{
-		$data = json_decode($request->getContent(), true);
 
 		$empresa = new Empresa();
 		$form = $this->createForm(EmpresaType::class, $empresa);
-		$form->submit($data);
+		$this->processForm($request, $form);
 
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($empresa);
@@ -89,6 +88,57 @@ class EmpresaController extends Controller
 	}
 
 
+    /**
+     * @Route("/api/empresa/{id}")
+     * @Method("PUT", "PATCH")
+     */
+    public function updateAction($id, Request $request)
+    {
+        $empresa = $this->getDoctrine()
+            ->getRepository('AppBundle:Empresa')
+            ->find($id);
+        
+        if (!$empresa) {
+            throw $this->createNotFoundException(sprintf(
+                'No empresa found with id "%s"',
+                $id
+            ));
+        }
+
+        $form = $this->createForm(EmpresaType::class, $empresa);
+        $this->processForm($request, $form);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($empresa);
+        $em->flush();
+
+        $data = $this->serializeEmpresa($empresa);
+        $response = new JsonResponse($data, 200);
+
+        return $response;
+    }
+
+
+    /**
+     * @Route("/api/empresa/{id}")
+     * @Method("DELETE")
+     */
+    public function deleteAction($id)
+    {
+        $empresa = $this->getDoctrine()
+            ->getRepository('AppBundle:Empresa')
+            ->find($id);
+
+        if ($empresa) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($empresa);
+            $em->flush();
+        }
+
+        return new Response(null, 204);
+    }
+
+
 	private function serializeEmpresa(Empresa $empresa)
     {
         return array(
@@ -97,5 +147,16 @@ class EmpresaController extends Controller
             'cuit' => $empresa->getCuit(),
             'direccion' => $empresa->getDireccion()
         );
+    }
+
+
+    private function processForm(Request $request, $form)
+    {
+        $data = json_decode($request->getContent(), true);
+
+        // clear all fields unless request method is patch
+        $clearMissing = $request->getMethod() != 'PATCH';
+
+        $form->submit($data, $clearMissing);
     }
 }
