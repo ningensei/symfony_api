@@ -113,16 +113,30 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
-        // app_api_empresa_new
-        if ('/api/empresa' === $pathinfo) {
-            if ('POST' !== $canonicalMethod) {
-                $allow[] = 'POST';
-                goto not_app_api_empresa_new;
-            }
+        elseif (0 === strpos($pathinfo, '/api/empresa')) {
+            // app_api_empresa_show
+            if (preg_match('#^/api/empresa/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                if ('GET' !== $canonicalMethod) {
+                    $allow[] = 'GET';
+                    goto not_app_api_empresa_show;
+                }
 
-            return array (  '_controller' => 'AppBundle\\Controller\\Api\\EmpresaController::newAction',  '_route' => 'app_api_empresa_new',);
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'app_api_empresa_show')), array (  '_controller' => 'AppBundle\\Controller\\Api\\EmpresaController::showAction',));
+            }
+            not_app_api_empresa_show:
+
+            // app_api_empresa_new
+            if ('/api/empresa' === $pathinfo) {
+                if ('POST' !== $canonicalMethod) {
+                    $allow[] = 'POST';
+                    goto not_app_api_empresa_new;
+                }
+
+                return array (  '_controller' => 'AppBundle\\Controller\\Api\\EmpresaController::newAction',  '_route' => 'app_api_empresa_new',);
+            }
+            not_app_api_empresa_new:
+
         }
-        not_app_api_empresa_new:
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
