@@ -92,6 +92,7 @@ class EmpresaController extends Controller
 	private function serializeEmpresa(Empresa $empresa)
     {
         return array(
+            'id' => $empresa->getId(),
             'nombre' => $empresa->getNombre(),
             'cuit' => $empresa->getCuit(),
             'direccion' => $empresa->getDireccion()
