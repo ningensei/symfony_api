@@ -8,6 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'SensioLabs\\Security' => array($vendorDir . '/sensiolabs/security-checker'),
+    'EightPoints\\Guzzle' => array($vendorDir . '/eightpoints/guzzle-wsse-middleware/src'),
+    'EightPoints\\Bundle\\GuzzleBundle' => array($vendorDir . '/eightpoints/guzzle-bundle'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
