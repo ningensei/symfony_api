@@ -11,7 +11,7 @@
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                        <i class="fa fa-dashboard"></i>  <a href="{{ url('home') }}">Dashboard</a>
                     </li>
                     <li class="active">
                         <i class="fa fa-table"></i> {{ current|capitalize }}
@@ -23,18 +23,18 @@
             
         <div class="row">
             <div class="col-xs-12">
-                <form role="form">
+                <form id="formEmpresa" role="form">
                     <div class="form-group">
                         <label>Nombre</label>
-                        <input class="form-control" placeholder="Ingresar nombre">
+                        <input id="nombre" value="{{ empresa.nombre is defined ? empresa.nombre : '' }}" class="form-control" placeholder="Ingresar nombre">
                     </div>
                     <div class="form-group">
                         <label>Cuit</label>
-                        <input class="form-control" placeholder="Ingresar cuit">
+                        <input id="cuit" value="{{ empresa.cuit is defined ? empresa.cuit : '' }}" class="form-control" placeholder="Ingresar cuit">
                     </div>
                     <div class="form-group">
                         <label>Dirección</label>
-                        <input class="form-control" placeholder="Ingresar dirección">
+                        <input id="direccion" value="{{ empresa.direccion is defined ? empresa.direccion : '' }}" class="form-control" placeholder="Ingresar dirección">
                     </div>
                 </form>
             </div>
@@ -42,7 +42,7 @@
         </div>
         <!-- /.row -->
 
-        <div class="text-center"><button type="button" class="btn btn-lg btn-primary">Guardar</button></div>
+        <div class="text-center" style="margin-bottom: 10px;"><button id="btnGuardar" data-id="{{ empresa.id }}" type="button" class="btn btn-lg btn-primary">Guardar</button></div>
     </div>
     <!-- /.container-fluid -->
 {% endblock %}

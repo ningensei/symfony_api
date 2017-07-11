@@ -70,6 +70,10 @@ class EmpresaController extends Controller
 		$form = $this->createForm(EmpresaType::class, $empresa);
 		$this->processForm($request, $form);
 
+        if (!$form->isValid()) {
+            return $this->createValidationErrorResponse($form);
+        }
+
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($empresa);
 		$em->flush();
@@ -136,6 +140,38 @@ class EmpresaController extends Controller
         }
 
         return new Response(null, 204);
+    }
+
+
+    private function createValidationErrorResponse($form)
+    {
+        $errors = $this->serializeForm($form);
+        $data = [
+            'type' => 'validation_error',
+            'title' => 'Hubo un error de validación',
+            'errors' => $errors
+        ];
+        return new JsonResponse($data, 400);
+    }
+
+
+    private function serializeForm(\Symfony\Component\Form\Form $form)
+    {
+        $local_errors = array();
+        foreach ($form->getIterator() as $key => $child) {
+
+            foreach ($child->getErrors() as $error) {
+                $local_errors[$key] = $error->getMessage();
+            }
+
+            if (count($child->getIterator()) > 0 && ($child instanceof \Symfony\Component\Form\Form)) {
+                if (!$child instanceof \Symfony\Component\Form\SubmitButton) {
+                    $local_errors[$key] = $this->serialize($child);
+                }
+            }
+        }
+
+        return $local_errors;
     }
 
 

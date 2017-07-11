@@ -31,12 +31,17 @@ class AbmController extends Controller
 
 
     /**
-     * @Route("/editar", name="editar")
+     * @Route("/editar/{id}", name="editar")
      */
-    public function editarAction()
+    public function editarAction($id)
     {
+        $empresa = $this->getDoctrine()
+            ->getRepository('AppBundle:Empresa')
+            ->find($id);
+
         return $this->render('form.html.twig', [
-            'current' => 'editar'
+            'current' => 'editar',
+            'empresa' => $empresa
         ]);
     }
 

@@ -11,7 +11,7 @@
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                        <i class="fa fa-dashboard"></i>  <a href="{{ url('home') }}">Dashboard</a>
                     </li>
                     <li class="active">
                         <i class="fa fa-table"></i> {{ current|capitalize }}
@@ -38,7 +38,7 @@
                         </tbody>
                     </table>
 
-                    <div class="text-center"><button type="button" class="btn btn-lg btn-primary">Agregar Empresa</button></div>
+                    <div class="text-center"><a href="{{ url('agregar') }}"><button type="button" class="btn btn-lg btn-primary">Agregar Empresa</button></a></div>
                 </div>
             </div>
 

@@ -25,6 +25,7 @@ class EmpresaType extends AbstractType
     {
     	$resolver->setDefaults([
     		'data_class' => 'AppBundle\Entity\Empresa',
+            'csrf_protection' => false
     	]);
     }
 

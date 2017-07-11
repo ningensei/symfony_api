@@ -186,8 +186,8 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         }
 
         // editar
-        if ('/editar' === $pathinfo) {
-            return array (  '_controller' => 'AppBundle\\Controller\\Web\\AbmController::editarAction',  '_route' => 'editar',);
+        if (0 === strpos($pathinfo, '/editar') && preg_match('#^/editar/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'editar')), array (  '_controller' => 'AppBundle\\Controller\\Web\\AbmController::editarAction',));
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();

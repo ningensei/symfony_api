@@ -14,6 +14,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Plugins -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('/plugins/sweetalert-master/dist/sweetalert.css') }}">
+
     <!-- Custom CSS -->
     <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
 
@@ -43,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin</a>
+                <a class="navbar-brand" href="{{ url('home') }}">SB Admin</a>
             </div>
             <!-- Top Menu Items -->
             
@@ -51,7 +54,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li>
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="{{ url('home') }}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                 </ul>
             </div>
@@ -72,6 +75,9 @@
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+    <!-- Sweet Alert -->
+    <script src="{{ asset('/plugins/sweetalert-master/dist/sweetalert-dev.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
