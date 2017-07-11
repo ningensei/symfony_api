@@ -90,7 +90,7 @@ class EmpresaController extends Controller
 
     /**
      * @Route("/api/empresa/{id}")
-     * @Method("PUT", "PATCH")
+     * @Method({"PUT", "PATCH"})
      */
     public function updateAction($id, Request $request)
     {

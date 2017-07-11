@@ -113,7 +113,21 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
-        elseif (0 === strpos($pathinfo, '/api/empresa')) {
+        // home
+        if ('' === $trimmedPathinfo) {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'home');
+            }
+
+            return array (  '_controller' => 'AppBundle\\Controller\\Web\\AbmController::listarAction',  '_route' => 'home',);
+        }
+
+        // agregar
+        if ('/agregar' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\Web\\AbmController::agregarAction',  '_route' => 'agregar',);
+        }
+
+        if (0 === strpos($pathinfo, '/api/empresa')) {
             // app_api_empresa_list
             if ('/api/empresa' === $pathinfo) {
                 if ('GET' !== $canonicalMethod) {
@@ -149,8 +163,8 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
             // app_api_empresa_update
             if (preg_match('#^/api/empresa/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
-                if ('PUT' !== $canonicalMethod) {
-                    $allow[] = 'PUT';
+                if (!in_array($requestMethod, array('PUT', 'PATCH'))) {
+                    $allow = array_merge($allow, array('PUT', 'PATCH'));
                     goto not_app_api_empresa_update;
                 }
 
@@ -169,6 +183,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             }
             not_app_api_empresa_delete:
 
+        }
+
+        // editar
+        if ('/editar' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\Web\\AbmController::editarAction',  '_route' => 'editar',);
         }
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
