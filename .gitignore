@@ -24,3 +24,7 @@ vendor/
 !var/sessions/.gitkeep
 
 !var/SymfonyRequirements.php
+
+# config
+/app/config/config.yml
+/app/config/parameters.yml
